@@ -118,7 +118,4 @@ Dynamic attribute evaluation determines final access decisions.
 - **Auth:** JWT, OTP (MFA)  
 - **Testing:** Postman  
 
----
-
-## 📁 Project Structure (Example)
 
