@@ -1,0 +1,6 @@
+.env
+go.sum
+vendor/
+*.log
+*.tmp
+.DS_Store
