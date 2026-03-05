@@ -26,11 +26,24 @@ func (r *assetRepository) Create(ctx context.Context, asset *entity.Asset) (*ent
 	}
 	return asset, nil
 }
+
+// func (r *assetRepository) GetByID(ctx context.Context, id string) (*entity.Asset, error) {
+// 	var asset entity.Asset
+// 	filter := bson.M{"id": id}
+// 	err := r.collection.FindOne(ctx, filter).Decode(&asset)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &asset, nil
+// }
+
 func (r *assetRepository) GetByID(ctx context.Context, id string) (*entity.Asset, error) {
 	var asset entity.Asset
-	filter := bson.M{"id": id}
-	err := r.collection.FindOne(ctx, filter).Decode(&asset)
+	err := r.collection.FindOne(ctx, bson.M{"_id": id}).Decode(&asset)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, nil // Return nil, nil if not found
+		}
 		return nil, err
 	}
 	return &asset, nil

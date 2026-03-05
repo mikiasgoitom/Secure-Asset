@@ -23,3 +23,18 @@ func (c Classification) String() string {
 		return "Unknown"
 	}
 }
+
+func GetClassificationLevel(level string) Classification {
+	switch level {
+		case "Confidential":
+			return Confidential
+		case "Restricted":
+			return Restricted
+		case "Internal":
+			return Internal
+		case "Public":
+			return Public
+		default:
+			return Public 
+	}
+}

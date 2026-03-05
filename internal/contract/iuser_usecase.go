@@ -7,6 +7,6 @@ import (
 )
 
 type IUserUsecase interface {
-	Register(ctx context.Context, username, email, password string) (*entity.User, error)
+	Register(ctx context.Context, username, email, password, role string) (*entity.User, error)
 	Login(ctx context.Context, identifier, password string) (string, error)
 }

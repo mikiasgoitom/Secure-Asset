@@ -50,8 +50,8 @@ func (j *JWTService) ValidateToken(tokenString string) (*dto.CustomClaims, error
 	}
 
 	if claims, ok := token.Claims.(*dto.CustomClaims); ok && token.Valid {
-        return claims, nil
-    }
+		return claims, nil
+	}
 
 	return nil, fmt.Errorf("invalid token claims")
 }

@@ -28,7 +28,7 @@ func (h *UserHandler) RegisterUser(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
 		return
 	}
-	_, err := h.userUsecase.Register(ctx.Request.Context(), req.Username, req.Email, req.Password)
+	_, err := h.userUsecase.Register(ctx.Request.Context(), req.Username, req.Email, req.Password, req.Role)
 	if err != nil {
 		h.Logger.Error("User registration failed", valueobject.Field{Key: "error", Value: err})
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "registration failed"})

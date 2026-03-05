@@ -8,4 +8,5 @@ import (
 	
 type IAssetUsecase interface {
 	CreateAsset(ctx context.Context, name, assetType string, classification uint8, ownerID string) (*entity.Asset, error)
+	GetAsset(ctx context.Context, assetID string) (*entity.Asset, error)
 }

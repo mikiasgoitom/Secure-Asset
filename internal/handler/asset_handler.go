@@ -34,7 +34,7 @@ func (h *AssetHandler) CreateAsset(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
-	asset, err := h.assetUsecase.CreateAsset(ctx.Request.Context(), req.Name, req.AssetType, req.Classification, req.OwnerUsername)
+	asset, err := h.assetUsecase.CreateAsset(ctx, req.Name, req.AssetType, req.Classification, req.OwnerUsername)
 	if err != nil {
 		h.logger.Error("Failed to create asset", valueobject.Field{Key: "Error", Value: err})
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create asset"})
@@ -42,4 +42,21 @@ func (h *AssetHandler) CreateAsset(ctx *gin.Context) {
 	}
 	h.logger.Info("Asset created successfully", valueobject.Field{Key: "AssetID", Value: asset.ID}, valueobject.Field{Key: "OwnerID", Value: ownerID})
 	ctx.JSON(http.StatusCreated, gin.H{"asset": asset})
+}
+
+func (h *AssetHandler) GetAsset(ctx *gin.Context) {
+	assetID := ctx.Param("id")
+	asset, err := h.assetUsecase.GetAsset(ctx, assetID)
+	if err != nil {
+		h.logger.Info("check asset:", valueobject.Field{Key: "AssetID", Value: assetID}, valueobject.Field{Key: "error", Value: err.Error()})
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	if asset == nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "Asset not found"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, asset)
 }
